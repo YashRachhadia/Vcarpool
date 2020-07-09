@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-lg-12">
+						<br>
+						<h2>Create Ride Form</h2>
+
+						<div class="text-center" ng-bind-html="postResponse"></div>
+							
+							<div class="form-group">
+							<table class="table">
+							
+								<tr>
+								<td colspan="2">
+
+									<label>Start Time and Date</label>
+								 	<input type="text" ng-model="startDateTime" id="startDateTime"  class="form-control" >
+
+								 	<script type="text/javascript">
+								 		$('#startDateTime').daterangepicker({
+									  	singleDatePicker: true,
+									    timePicker: true,
+									    //startDate: moment().startOf('hour'),
+									    minDate: moment(`${moment().format('YYYY-MM-DD HH:mm')}`,'YYYY-MM-DD HH:mm').add(5, 'minutes'),
+									    locale: {
+									      format: 'YYYY-MM-DD HH:mm'
+									    }
+									  });
+								 		
+								 	</script>
+
+								</td>
+								<td>
+									<label>Car Type</label>
+								 	<select ng-model="carType" class="form-control">
+								 		<option value='HATCHBACK'>HATCHBACK</option>
+								 		<option value='SEDAN'>SEDAN</option>
+								 		<option value='SUV'>SUV</option>
+								 	</select>
+							</td>
+							</tr>
+							
+							<tr>
+								<td>
+									<label>CAPACITY</label>
+								 	<input type="number" ng-model="capacity" class="form-control" min='1'>
+								
+								</td>
+								<td>
+									<label>Destination</label>
+								 	<input type="text" class="form-control" ng-model="destination" >
+								
+								</td>
+								<td>
+									<label>Vehicle No</label>
+								 	<input type="text" class="form-control" ng-model="vehicleNumber">
+								
+							
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<label>Car Model</label>
+								 	<input type="text" class="form-control" ng-model="carModel">
+								
+								</td>
+								<td>
+								
+									<label>Fare</label>
+								 	<input type="number" class="form-control" ng-model="fare">
+								
+								</td>
+							</tr>
+							</table>
+
+						</div>
+							<div class="text-center">
+								<button  type="button" ng-click="submitRide()" class="btn btn-primary">Create Ride</button>
+							</div>
+						
+
+					</div>
+				</div>
+				
+			</div>
+
+
+</body>
+</html>
+
+			
+		
+
+		
+			

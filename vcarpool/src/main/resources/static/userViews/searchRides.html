@@ -1,0 +1,59 @@
+
+<div ng-include="'userViews/header.html'"></div>
+<br><br><br><br>
+<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12 form-inline">
+				<div class="form-group">
+					<label>Destination</label> &nbsp
+					<input type="text" ng-model='destinationSearch' class="form-control" id='destinationSearch'>
+			
+				</div> &nbsp &nbsp&nbsp &nbsp&nbsp &nbsp
+				<div class="form-group">
+					<label>Date, Hour, Minute</label>&nbsp
+					<input type="date" ng-model='date' id='date' class="form-control">
+					<div ng-include="'showTimeDropDown.html'"></div>
+					&nbsp&nbsp
+					<button class="btn btn-success" ng-click='search(1)'>Search</button>
+				</div>
+			</div>
+		</div>
+		<br><br>
+		<div class="row text-center" ng-bind-html='resultBad'>
+			
+		</div>
+
+		<div class="row">
+			<div class='col-sm-12 '>
+				<ul class="pagination justify-content-center" >
+					<li class="page-item" ng-repeat="x in [].constructor(totalPages) track by $index">
+						<a class="page-link" ng-click="search($index+1)">{{$index+1}}</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class='col-sm-12' ng-repeat=" x in data.content">
+		 		<br>
+		 		<table class='table table-dark table-striped' style="cursor: pointer;" 
+		 			ng-click='book( x.rideId )'>
+		 			<tr class='info'>
+		 				<td>Date: {{ x.startDateTime.split(" ")[0].split("-")[2] }} /
+		 				{{x.startDateTime.split(" ")[0].split("-")[1]}} /
+		 				{{x.startDateTime.split(" ")[0].split("-")[0]}}</td>
+		 				<td>Time (24 Hrs): {{x.startDateTime.split(" ")[1].slice(0,5)}}</td>
+		 				<td>Type: {{ x.carType }}</td>
+		 				<td>Model: {{ x.carModel }}</td>
+		 			</tr>
+		 			<tr class='info'>
+		 				<td>Seats Left: {{ x.capacity }}</td>
+		 				
+		 				<td colspan='2'>Vehicle No: {{ x.vehicleNo }}</td>
+		 				<td>Fare: Rs. {{ x.fare }}</td>
+		 			</tr>
+		 		</table>
+			</div>
+		</div>
+    
+</div>

@@ -1,0 +1,60 @@
+<div ng-include="'userViews/header.html'"></div>
+<br><br>
+<div class="container">
+	
+	<div class="row text-center" ng-bind-html='resultBad'>	
+	</div>
+
+	<div class="row">
+		<div class='col-sm-12 '>
+			<ul class="pagination justify-content-center" >
+				<li class="page-item" ng-repeat="x in [].constructor(totalPages) track by $index">
+					<a class="page-link" ng-click="getRide($index+1)">{{$index+1}}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row">
+			<div class='col-sm-12' ng-repeat=" x in data.content" >
+		 		<br>
+		 		<table class='table table-dark table-striped table-responsive' >
+		 			<tr class='info'>
+		 				<td>Ride ID: {{x[1].rideId}}</td>
+		 				<td>Destination: {{x[1].destination}}</td>
+		 				<td>Start: {{ x[1].startDateTime.split(" ")[0].split("-")[2] }}/{{x[1].startDateTime.split(" ")[0].split("-")[1]}}/{{x[1].startDateTime.split(" ")[0].split("-")[0]}}  
+		 				{{x[1].startDateTime.split(" ")[1].slice(0,5)}}
+		 				</td>
+		 				<td>End: {{ x[1].endDateTime.split(" ")[0].split("-")[2] }}/{{x[1].endDateTime.split(" ")[0].split("-")[1]}}/{{x[1].endDateTime.split(" ")[0].split("-")[0]}}  
+		 				{{x[1].endDateTime.split(" ")[1].slice(0,5)}}</td>
+		 				<td>Owner: {{x[1].employee.fname}} {{x[1].employee.lname}}</td>
+		 			</tr>
+		 			<tr>
+		 				<td>Mobile: {{x[1].employee.mobile}}</td>
+		 				<td>Email: {{x[1].employee.email}}</td>
+		 				<td>Car: {{x[1].carModel}} ({{x[1].carType}})</td>
+		 				<td>Vehicle No: {{x[1].vehicleNo}}</td>
+		 				<td>Ride Status: {{x[1].rideStatus}}<br>
+		 					Ridership Status: {{x[0].rideStatus}}</td>
+		 			</tr>
+		 			<tr>
+		 				<td>
+		 					TID: {{x[0].tid}}
+		 				</td>
+		 				<td>Fare: Rs. {{x[1].fare}}</td>
+		 				<td>
+		 					Payment Mode & Status: {{x[0].payment.mode}} ({{x[0].payment.status}})
+		 				</td>
+		 				
+		 				<td colspan="2">
+		 					<button class="btn btn-danger" ng-click="cancelRidership(x[0].payment.mode,x[0].rideStatus,x[0].payment.status,x[1].rideStatus,x[1].rideId,$index+1)">Cancel Ridership</button>
+		 				</td>
+		 			</tr>
+		 		</table>
+			</div>
+		</div>
+
+		
+		
+</div>
+

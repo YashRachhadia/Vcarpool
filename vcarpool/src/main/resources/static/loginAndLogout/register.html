@@ -1,0 +1,78 @@
+<div ng-include="'loginAndLogout/header.html'"></div>
+
+<div class="container" >
+			<div class="row" style="margin-top: 50px;">
+				<div class="col-md-6 col-lg-6 col-sm-6">
+					<div class="login100-pic js-tilt" data-tilt>
+						<img src="images/img-01.png" alt="IMG">
+					</div>
+				</div>
+
+				<div class="col-md-6 col-lg-6 col-sm-6">
+					<form class="login100-form validate-form">
+						<span class="login100-form-title">
+							<strong>Register</strong>
+						</span>
+
+						<div class="wrap-input100 validate-input" data-validate = "EmpID is required">
+							<input class="input100" type="number" name="EmpID" placeholder="EmpID" ng-model="empId">
+							<span class="focus-input100"></span>
+							<span class="symbol-input100">
+								<i class="fa fa-envelope" aria-hidden="true"></i>
+							</span>
+						</div>
+						<br>
+						<table style="font-size: 13px;">
+						<tr>
+							<td colspan="2">Password criteria:should be of atleast 8 characters consisting of minimum:</td>
+						</tr>
+						<tr>
+							<td>1 uppercase</td>
+							<td>1 lowercase</td>	
+						</tr>
+						<tr>
+							<td>1 digit</td>
+							<td>1 special symbol</td>	
+						</tr>
+						</table>
+						<br>
+						<div class="wrap-input100 validate-input" data-validate = "Password is required">
+							<input class="input100" type="password" name="pass" ng-model="password" placeholder="Password">
+							<span class="focus-input100"></span>
+							<span class="symbol-input100">
+								<i class="fa fa-lock" aria-hidden="true"></i>
+							</span>
+						</div>
+						
+						<div class="wrap-input100 validate-input" data-validate = "Password is required">
+							<input class="input100" type="password" name="pass" ng-model="confPassword" placeholder="Confirm Password">
+							<span class="focus-input100"></span>
+							<span class="symbol-input100">
+								<i class="fa fa-lock" aria-hidden="true"></i>
+							</span>
+						</div>
+						<br>
+						<div ng-bind-html='registerResponse'></div>
+
+						<div class="container-login100-form-btn">
+							<button class="login100-form-btn" ng-click='register()'>
+								Register
+							</button>
+						</div>
+
+						<!-- <div class="text-center p-t-12">
+							<span class="txt1">
+								Forgot
+							</span>
+							<a class="txt2" href="#">
+								Username / Password?
+							</a>
+						</div> -->
+						
+						<div ng-bind-html="postResponse"></div>
+
+					</form>
+				</div>
+				</div>
+			</div>
+		</div>

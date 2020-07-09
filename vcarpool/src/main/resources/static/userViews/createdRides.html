@@ -1,0 +1,170 @@
+<div ng-include="'userViews/header.html'"></div>
+<br><br>
+<div class="container">
+	<div class="alert alert-info">Rides can only be modified till 1 hour left for Ride's start time and the ride has not been completed.</div>
+	<div class="row">
+		<div class="col-sm-12 form-group">
+			<label>From</label>
+			<input type="date" name="date" ng-model='date' id='date' class="form-control">
+			<br>
+			<button class="btn btn-success" ng-click='getRide(1)'>Get Rides</button>
+		</div>
+	</div>
+
+	<div class="row" ng-bind-html='resultBad'>	
+	</div>
+
+	<div class="row">
+		<div class='col-sm-12 '>
+			<ul class="pagination justify-content-center" >
+				<li class="page-item" ng-repeat="x in [].constructor(totalPages) track by $index">
+					<a class="page-link" ng-click="getRide($index+1)">{{$index+1}}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row">
+			<div class='col-sm-12' ng-repeat=" x in data.content" style="cursor: pointer;">
+		 		<br>
+		 		<table class='table table-dark table-striped' ng-click='showHide(x.rideId)' >
+		 			<tr class='info'>
+		 				<td>Start: {{ x.startDateTime.split(" ")[0].split("-")[2] }}/{{x.startDateTime.split(" ")[0].split("-")[1]}}/{{x.startDateTime.split(" ")[0].split("-")[0]}}  
+		 			{{x.startDateTime.split(" ")[1].slice(0,5)}}</td>
+		 				<td>End:  {{ x.endDateTime.split(" ")[0].split("-")[2] }}/{{x.endDateTime.split(" ")[0].split("-")[1]}}/{{x.endDateTime.split(" ")[0].split("-")[0]}}  
+		 			{{x.endDateTime.split(" ")[1].slice(0,5)}}</td>
+
+		 				<td>Type: {{ x.carType }}</td>
+		 				<td>Model: {{ x.carModel }}</td>
+		 				<td>Status: {{x.rideStatus}}</td>
+		 			</tr>
+		 			<tr class='info'>
+		 				<td>Capacity: {{ x.capacity+x.riders.length }}</td>
+		 				<td>Seats Filled: {{x.riders.length}}</td>
+		 				<td>Vehicle No: {{ x.vehicleNo }}</td>
+		 				<td>Fare: Rs. {{ x.fare }}</td>
+		 				<td>
+		 					<button class='btn btn-success completeRideBtn' ng-click='completeRide(x)'
+		 					data-target="#rideCompletionModal" data-toggle="modal">Ride Completed</button>
+		 					<button class="btn btn-warning modifyRideBtn" ng-click='modifyRide(x)' data-toggle="modal" data-target="#modifyModal">Modify</button>
+		 					<button class="btn btn-danger cancelRideBtn" ng-click='cancelRide(x.rideId,x.rideStatus)'>Cancel</button>
+		 				</td>
+		 			</tr><!-- {{x.rideId}}-->
+		 			<tr id='{{x.rideId}}' style="display: none;">
+		 				<td colspan="5" class="table-secondary">
+		 					<table class="table table-striped table-borderless table-hover">
+		 						<tr>
+		 							<th>Emp ID</th>
+		 							<th>Name</th>
+		 							<th>Email</th>
+		 							<th>Mobile</th>
+		 							<th>Ride Status</th>
+		 							<th>Payment Status</th>
+		 						</tr>
+		 						<tr ng-repeat=" rider in x.riders">
+					 				<td>{{rider.employee.empId}}</td>
+					 				<td>{{rider.employee.fname}} {{rider.employee.lname}}</td>
+					 				<td>{{rider.employee.email}}</td>
+					 				<td>{{rider.employee.mobile}}</td>
+					 				<td>{{rider.rideStatus}}</td>
+					 				<td>{{rider.payment.status}} ({{rider.payment.mode}})</td>
+					 			</tr>
+		 					</table>
+		 				</td>
+		 			</tr>
+		 			
+		 		</table>
+			</div>
+		</div>
+
+		<!-- The Modal -->
+		<div class="modal" id="modifyModal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+
+		      <!-- Modal body -->
+		      <div class="modal-body">
+		        <div class="row form-group">
+		        	<div class="col-sm-12 col-md-6 col-lg-6">
+		        		<label>Type:</label>
+		        		<select ng-model="carType" name="carType" class="form-control disableModify" required>
+					 		<option value='HATCHBACK' ng-selected="{{sel1}}" >HATCHBACK</option>
+					 		<option value='SEDAN' ng-selected="{{sel2}}">SEDAN</option>
+					 		<option value='SUV' ng-selected="{{sel3}}">SUV</option>
+					 	</select>
+		        	</div>
+		        	<div class="col-sm-12 col-md-6 col-lg-6">
+		        		<label>Car Model</label>
+						<input type="text" class="form-control disableModify" name="carModel" ng-model="carModel" required>
+		        	</div>
+		        	<div class="col-sm-12 col-md-6 col-lg-6">
+			        	<label>Vehicle No</label>
+						<input type="text" class="form-control disableModify" name="vehicleNumber" ng-model="vehicleNumber" required>
+					</div>
+					<div class="col-sm-12 col-md-6 col-lg-6">
+		        		<label>CAPACITY</label>
+						<input type="number" ng-model="capacity" name="capacity" class="form-control disableModify" min='{{minCap}}' required>
+						<div style="display: none;">{{selectedRideStatus}}</div>
+		        	</div>
+		        	<div class="col-sm-12 col-md-12 col-lg-12">
+		        		<br>
+		        		<div class="alert alert-info">Increasing or decreasing capacity would not affect
+		        		already booked riders.</div>
+		        	</div>
+		        </div>
+		      </div>
+	  	
+
+		      <!-- Modal footer -->
+		      <div class="modal-footer">
+		      	<div class="row">
+		      		<div class="col-sm-12 col-lg-12 col-md-12">
+		      			<div ng-bind-html='message'></div>		
+		      		</div>
+		      	</div>
+		      	<div class="row">
+		      		<div class="col-sm-6 col-lg-6 col-md-6">
+		      			<button data-dismiss="modal" ng-click='revertDisplayBtn()' class="btn btn-danger">Close</button>
+		        			
+		      		</div>
+		      		<div class="col-sm-6 col-lg-6 col-md-6">
+		      			<button type="button" class="btn btn-success btn-block" id='contModifyBtn' ng-click='contModify()'>Change</button>
+		      		</div>
+		      		
+		      	</div>
+		      	
+		        
+		      </div>
+
+		    </div>
+		  </div>
+		</div>
+
+		<div class="modal" id="rideCompletionModal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+
+		      <!-- Modal body -->
+		      <div class="modal-body">
+		      	<div ng-bind-html='promptForCashPay'></div>
+		      </div>
+
+		      <!-- Modal footer -->
+		      <div class="modal-footer">
+		      			
+		      				<button data-dismiss="modal" ng-click='revertDisplayBtn()' class="btn btn-danger">Close</button>
+		      			
+		      			<button type='button' class="btn btn-success" id='confirmPay' 
+		      			ng-click='confirmCashPayment()'>Confirm Payment</button>
+		      </div>
+		      	
+		        
+		      </div>
+
+		     </div>
+		    </div>
+		 </div>
+
+
+</div>
+

@@ -1,0 +1,63 @@
+<div ng-include="'userViews/header.html'"></div>
+<br><br>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+
+			<table class="table table-striped">
+				<tr>
+					<td>Ride Owner: {{fullName}}</td>
+					<td>Seats Left: {{seatLeft}}</td>
+					<td>Destination: {{destination}}</td>
+					<td>Date & Time(24 hrs): {{startDateTime}}</td>
+				</tr>
+				<tr>
+					<td>Type: {{carType}}</td>
+					<td>Model: {{carModel}}</td>
+					<td>Vehicle No: {{vehicle}}</td>
+					<td>Fare: Rs.{{fare}}</td>
+				</tr>
+			</table>
+
+		</div>
+	</div>
+	<br><br>
+	<div class="row">
+		<div class="col-sm-12 col-lg-6 col-md-6">
+			
+			<div class="card">
+			  <div class="card-header">Pay Online</div>
+			  <div class="card-body">
+			  	<p class="card-text form-group">Credit Card Number: 
+			  		<input type='text' name="cardNum" ng-model='cardNum' placeholder="xxxxxxxxxxxxxxxx" class="form-control" minlength="16" maxlength="16" required>
+			  		<div ng-bind-html='errorCard'></div>
+			  	</p>
+			  	<p class="card-text form-group">CVV: 
+			  		<input type='text' placeholder="xxx" ng-model='cvv' name="cvv" class="form-control" minlength="3" maxlength="3" required>
+			  		<div ng-bind-html='errorCvv'></div>
+			  	</p>
+			  	<div class="text-center">
+			  		<button class="btn btn-primary" ng-click='pay(1)'>Pay Rs.{{fare}}</button>
+			  	</div>
+			  	
+			  </div>
+			  </div>
+		</div>
+		<div class="col-sm-12 col-lg-6 col-md-6">
+			
+			<div class="card">
+			  <div class="card-header">Pay By Cash After Ride</div>
+			  <div class="card-body">
+			  	<div class="text-center">
+			  		<button class="btn btn-primary" ng-click='pay(2)'>Cash Payment of Rs.{{fare}}</button>
+			  	</div>
+			  	
+			  </div>
+			  </div>
+		</div>
+		<br>
+		<div class="col-sm-12" ng-bind-html='response'></div>
+
+			
+	</div>
+</div>
